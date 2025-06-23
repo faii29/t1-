@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Surprise</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <style>
+      #countdownWrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 105, 153, 0.37); /* now matches your site background */
+        color: #fff;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-family: sans-serif;
+        font-size: 2em;
+        text-align: center;
+      }
+
+      #countdown {
+        display: flex;
+        gap: 1em;
+        margin-top: 1em;
+      }
+
+      .count-box {
+        background: #111;
+        padding: 0.5em 1em;
+        border-radius: 8px;
+      }
+
+      .count-label {
+        font-size: 0.5em;
+        margin-top: 0.3em;
+        display: block;
+      }
+
+      .hidden-before-release {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Countdown Overlay -->
+    <div id="countdownWrapper">
+      <div></div>
+      <div id="countdown">
+        <div class="count-box">
+          <span id="days">00</span>
+          <span class="count-label">Days</span>
+        </div>
+        <div class="count-box">
+          <span id="hours">00</span>
+          <span class="count-label">Hours</span>
+        </div>
+        <div class="count-box">
+          <span id="minutes">00</span>
+          <span class="count-label">Minutes</span>
+        </div>
+        <div class="count-box">
+          <span id="seconds">00</span>
+          <span class="count-label">Seconds</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden content until countdown ends -->
+    <div id="content" class="hidden-before-release">
+      <div class="candle-count-display">
+        HAPPY BIRTHDAY IVORY!
+      </div>
+      <div class="cake">
+        <div id="candleCount" style="display:none;"></div>
+        <div class="plate"></div>
+        <div class="layer layer-bottom"></div>
+        <div class="layer layer-middle"></div>
+        <div class="layer layer-top"></div>
+        <div class="icing"></div>
+        <div class="drip drip1"></div>
+        <div class="drip drip2"></div>
+        <div class="drip drip3"></div>
+      </div>
+        
+      <div class="footer">
+        &nbsp;  &nbsp; Made with
+        <svg class="heart" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="1.488"></g>
+          <g id="SVGRepo_iconCarrier">
+            <path d="M2 9.1371C2 14 6.01943 16.5914 8.96173 18.9109C10 19.7294 11 20.5 12 20.5C13 20.5 14 19.7294 15.0383 18.9109C17.9806 16.5914 22 14 22 9.1371C22 4.27416 16.4998 0.825464 12 5.50063C7.50016 0.825464 2 4.27416 2 9.1371Z" fill="#ff6999"></path>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <script>
+      const targetDate = new Date("2025-09-09T00:00:00+08:00"); // Brunei time
+      const countdownWrapper = document.getElementById("countdownWrapper");
+      const content = document.getElementById("content");
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          countdownWrapper.style.display = "none";
+          content.classList.remove("hidden-before-release");
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("days").textContent = String(days).padStart(2, '0');
+        document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+        document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+        document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    </script>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2"></script>
+  </body>
+</html>
